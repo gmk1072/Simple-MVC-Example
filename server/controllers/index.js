@@ -7,13 +7,13 @@ const Dog = models.Dog.DogModel;
 
 // default fake data so that we have something to work with until we make a real Cat
 const defaultData = {
-    name: 'unknown',
-    bedsOwned: 0,
+  name: 'unknown',
+  bedsOwned: 0,
 };
 const defaultDataDog = {
-    name: 'unknown',
-    breed: 'unkown',
-    age: 1,
+  name: 'unknown',
+  breed: 'unkown',
+  age: 1,
 };
 
 // object for us to keep track of the last Cat we made and dynamically update it sometimes
@@ -30,12 +30,12 @@ const hostIndex = (req, res) => {
     // file type in the app.js as jade. Calling res.render('index')
     // actually calls index.jade. A second parameter of JSON can be passed
     // into the jade to be used as variables with #{varName}
-    res.render('index', {
-        currentCatName: lastAdded.name,
-        currentDogName: lastAddedDog.name,
-        title: 'Home',
-        pageName: 'Home Page',
-    });
+  res.render('index', {
+    currentCatName: lastAdded.name,
+    currentDogName: lastAddedDog.name,
+    title: 'Home',
+    pageName: 'Home Page',
+  });
 };
 
 // function to find all cats on request.
@@ -48,49 +48,49 @@ const readAllCats = (req, res, callback) => {
     // two parameters is JSON of search criteria and callback.
     // That limits your search to only things that match the criteria
     // The find function returns an array of matching objects
-    Cat.find(callback);
+  Cat.find(callback);
 };
 
 const readAllDogs = (req, res, callback) => {
-    Dog.find(callback);
+  Dog.find(callback);
 };
 
 
 // function to find a specific cat on request.
 // Express functions always receive the request and the response.
 const readCat = (req, res) => {
-    const name1 = req.query.name;
+  const name1 = req.query.name;
 
     // function to call when we get objects back from the database.
     // With Mongoose's find functions, you will get an err and doc(s) back
-    const callback = (err, doc) => {
-        if (err) {
-            return res.json({ err }); // if error, return it
-        }
+  const callback = (err, doc) => {
+    if (err) {
+      return res.json({ err }); // if error, return it
+    }
 
         // return success
-        return res.json(doc);
-    };
+    return res.json(doc);
+  };
 
     // Call the static function attached to CatModels.
     // This was defined in the Schema in the Model file.
     // This is a custom static function added to the CatModel
     // Behind the scenes this runs the findOne method.
     // You can find the findByName function in the model file.
-    Cat.findByName(name1, callback);
+  Cat.findByName(name1, callback);
 };
 
 const readDog = (req, res) => {
-    const name1 = req.query.name;
+  const name1 = req.query.name;
 
-    const callback = (err, doc) => {
-        if(err) {
-            return res.json({err });
-        }
-        return res.json(doc);
-    };
+  const callback = (err, doc) => {
+    if (err) {
+      return res.json({ err });
+    }
+    return res.json(doc);
+  };
 
-    Dog.findByName(name1, callback);
+  Dog.findByName(name1, callback);
 };
 
 // function to handle requests to the page1 page
@@ -99,16 +99,16 @@ const readDog = (req, res) => {
 const hostPage1 = (req, res) => {
     // function to call when we get objects back from the database.
     // With Mongoose's find functions, you will get an err and doc(s) back
-    const callback = (err, docs) => {
-        if (err) {
-            return res.json({ err }); // if error, return it
-        }
+  const callback = (err, docs) => {
+    if (err) {
+      return res.json({ err }); // if error, return it
+    }
 
         // return success
-        return res.render('page1', { cats: docs });
-    };
+    return res.render('page1', { cats: docs });
+  };
 
-    readAllCats(req, res, callback);
+  readAllCats(req, res, callback);
 };
 
 // function to handle requests to the page2 page
@@ -121,7 +121,7 @@ const hostPage2 = (req, res) => {
     // the file type in the app.js as jade. Calling res.render('index')
     // actually calls index.jade. A second parameter of JSON can be
     // passed into the jade to be used as variables with #{varName}
-    res.render('page2');
+  res.render('page2');
 };
 
 // function to handle requests to the page3 page
@@ -134,8 +134,7 @@ const hostPage3 = (req, res) => {
     // in the app.js as jade. Calling res.render('index')
     // actually calls index.jade. A second parameter of JSON can be passed
     // into the jade to be used as variables with #{varName}
-    res.render('page3');
-
+  res.render('page3');
 };
 
 const hostPage4 = (req, res) => {
@@ -145,14 +144,13 @@ const hostPage4 = (req, res) => {
     // in the app.js as jade. Calling res.render('index')
     // actually calls index.jade. A second parameter of JSON can be passed
     // into the jade to be used as variables with #{varName}
-    const callback = (err, docs) => {
-        if (err) {
-            return res.render('page4');
-        }
-        return res.render('page4', {dogs: docs});
-    };
-    readAllDogs(req,res,callback);
-
+  const callback = (err, docs) => {
+    if (err) {
+      return res.render('page4');
+    }
+    return res.render('page4', { dogs: docs });
+  };
+  readAllDogs(req, res, callback);
 };
 
 // function to handle get request to send the name
@@ -162,11 +160,11 @@ const getName = (req, res) => {
     // res.json returns json to the page.
     // Since this sends back the data through HTTP
     // you can't send any more data to this user until the next response
-    res.json({ name: lastAdded.name });
+  res.json({ name: lastAdded.name });
 };
 
 const getNameDog = (req, res) => {
-    res.json({name: lastAddedDog.name});
+  res.json({ name: lastAddedDog.name });
 };
 
 // function to handle a request to set the name
@@ -178,79 +176,79 @@ const setName = (req, res) => {
     // check if the required fields exist
     // normally you would also perform validation
     // to know if the data they sent you was real
-    if (!req.body.firstname || !req.body.lastname || !req.body.beds) {
+  if (!req.body.firstname || !req.body.lastname || !req.body.beds) {
         // if not respond with a 400 error
         // (either through json or a web page depending on the client dev)
-        return res.status(400).json({ error: 'firstname,lastname and beds are all required' });
-    }
+    return res.status(400).json({ error: 'firstname,lastname and beds are all required' });
+  }
 
     // if required fields are good, then set name
-    const name = `${req.body.firstname} ${req.body.lastname}`;
+  const name = `${req.body.firstname} ${req.body.lastname}`;
 
     // dummy JSON to insert into database
-    const catData = {
-        name,
-        bedsOwned: req.body.beds,
-    };
+  const catData = {
+    name,
+    bedsOwned: req.body.beds,
+  };
 
     // create a new object of CatModel with the object to save
-    const newCat = new Cat(catData);
+  const newCat = new Cat(catData);
 
     // create new save promise for the database
-    const savePromise = newCat.save();
+  const savePromise = newCat.save();
 
-    savePromise.then(() => {
+  savePromise.then(() => {
         // set the lastAdded cat to our newest cat object.
         // This way we can update it dynamically
-        lastAdded = newCat;
+    lastAdded = newCat;
         // return success
-        res.json({ name: lastAdded.name, beds: lastAdded.bedsOwned });
-    });
+    res.json({ name: lastAdded.name, beds: lastAdded.bedsOwned });
+  });
 
     // if error, return it
-    savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 
-    return res;
+  return res;
 };
 
 const setNameDog = (req, res) => {
     // check if the required fields exist
     // normally you would also perform validation
     // to know if the data they sent you was real
-    if (!req.body.firstname || !req.body.lastname || !req.body.breed || !req.body.age) {
+  if (!req.body.firstname || !req.body.lastname || !req.body.breed || !req.body.age) {
         // if not respond with a 400 error
         // (either through json or a web page depending on the client dev)
-        return res.status(400).json({ error: 'firstname,lastname, breed, and age are all required' });
-    }
+    return res.status(400).json({ error: 'firstname,lastname, breed, and age are all required' });
+  }
 
     // if required fields are good, then set name
-    const name = `${req.body.firstname} ${req.body.lastname}`;
+  const name = `${req.body.firstname} ${req.body.lastname}`;
 
     // dummy JSON to insert into database
-    const dogData = {
-        name,
-        breed: req.body.breed,
-        age: req.body.age,
-    };
+  const dogData = {
+    name,
+    breed: req.body.breed,
+    age: req.body.age,
+  };
 
     // create a new object of CatModel with the object to save
-    const newDog = new Dog(dogData);
+  const newDog = new Dog(dogData);
 
     // create new save promise for the database
-    const savePromise = newDog.save();
+  const savePromise = newDog.save();
 
-    savePromise.then(() => {
+  savePromise.then(() => {
         // set the lastAdded cat to our newest cat object.
         // This way we can update it dynamically
-        lastAddedDog = newDog;
+    lastAddedDog = newDog;
         // return success
-        res.json({ name: lastAddedDog.name, breed: lastAddedDog.breed, age: lastAddedDog.age });
-    });
+    res.json({ name: lastAddedDog.name, breed: lastAddedDog.breed, age: lastAddedDog.age });
+  });
 
     // if error, return it
-    savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 
-    return res;
+  return res;
 };
 
 
@@ -265,9 +263,9 @@ const searchName = (req, res) => {
     // For POST requests like the other ones in here, those come in a
     // request body because they aren't a query
     // POSTS send data to add while GETS query for a page or data (such as a search)
-    if (!req.query.name) {
-        return res.json({ error: 'Name is required to perform a search' });
-    }
+  if (!req.query.name) {
+    return res.json({ error: 'Name is required to perform a search' });
+  }
 
     // Call our Cat's static findByName function.
     // Since this is a static function, we can just call it without an object
@@ -276,21 +274,21 @@ const searchName = (req, res) => {
     // together so it's easier to see how the system works
     // For that reason, I gave it an anonymous callback instead of a
     // named function you'd have to go find
-    return Cat.findByName(req.query.name, (err, doc) => {
+  return Cat.findByName(req.query.name, (err, doc) => {
         // errs, handle them
-        if (err) {
-            return res.json({ err }); // if error, return it
-        }
+    if (err) {
+      return res.json({ err }); // if error, return it
+    }
 
         // if no matches, let them know
         // (does not necessarily have to be an error since technically it worked correctly)
-        if (!doc) {
-            return res.json({ error: 'No cats found' });
-        }
+    if (!doc) {
+      return res.json({ error: 'No cats found' });
+    }
 
         // if a match, send the match back
-        return res.json({ name: doc.name, beds: doc.bedsOwned });
-    });
+    return res.json({ name: doc.name, beds: doc.bedsOwned });
+  });
 };
 
 const searchNameDog = (req, res) => {
@@ -301,9 +299,9 @@ const searchNameDog = (req, res) => {
     // For POST requests like the other ones in here, those come in a
     // request body because they aren't a query
     // POSTS send data to add while GETS query for a page or data (such as a search)
-    if (!req.query.name) {
-        return res.json({ error: 'Name is required to perform a search' });
-    }
+  if (!req.query.name) {
+    return res.json({ error: 'Name is required to perform a search' });
+  }
 
     // Call our Cat's static findByName function.
     // Since this is a static function, we can just call it without an object
@@ -312,21 +310,21 @@ const searchNameDog = (req, res) => {
     // together so it's easier to see how the system works
     // For that reason, I gave it an anonymous callback instead of a
     // named function you'd have to go find
-    return Dog.findByName(req.query.name, (err, doc) => {
+  return Dog.findByName(req.query.name, (err, doc) => {
         // errs, handle them
-        if (err) {
-            return res.json({ err }); // if error, return it
-        }
+    if (err) {
+      return res.json({ err }); // if error, return it
+    }
 
         // if no matches, let them know
         // (does not necessarily have to be an error since technically it worked correctly)
-        if (!doc) {
-            return res.json({ error: 'No dogs found' });
-        }
+    if (!doc) {
+      return res.json({ error: 'No dogs found' });
+    }
 
         // if a match, send the match back
-        return res.json({ name: doc.name, breed: doc.breed, age: doc.age });
-    });
+    return res.json({ name: doc.name, breed: doc.breed, age: doc.age });
+  });
 };
 
 
@@ -342,18 +340,18 @@ const updateLast = (req, res) => {
     // You can treat objects just like that - objects.
     // Normally you'd find a specific object, but we will only
     // give the user the ability to update our last object
-    lastAdded.bedsOwned++;
+  lastAdded.bedsOwned++;
 
     // once you change all the object properties you want,
     // then just call the Model object's save function
     // create a new save promise for the database
-    const savePromise = lastAdded.save();
+  const savePromise = lastAdded.save();
 
     // send back the name as a success for now
-    savePromise.then(() => res.json({ name: lastAdded.name, beds: lastAdded.bedsOwned }));
+  savePromise.then(() => res.json({ name: lastAdded.name, beds: lastAdded.bedsOwned }));
 
     // if save error, just return an error for now
-    savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 };
 
 
@@ -365,18 +363,20 @@ const updateLastDog = (req, res) => {
     // give the user the ability to update our last object
 
 
-    lastAddedDog.age++;
+  lastAddedDog.age++;
 
     // once you change all the object properties you want,
     // then just call the Model object's save function
     // create a new save promise for the database
-    const savePromise = lastAddedDog.save();
+  const savePromise = lastAddedDog.save();
 
     // send back the name as a success for now
-    savePromise.then(() => res.json({ name: lastAddedDog.name, breed: lastAddedDog.breed, age: lastAddedDog.age }));
+  savePromise.then(() => res.json({
+    name: lastAddedDog.name, breed: lastAddedDog.breed, age: lastAddedDog.age,
+  }));
 
     // if save error, just return an error for now
-    savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 };
 
 
@@ -390,27 +390,27 @@ const notFound = (req, res) => {
     // in the app.js as jade. Calling res.render('index')
     // actually calls index.jade. A second parameter of JSON can be passed into
     // the jade to be used as variables with #{varName}
-    res.status(404).render('notFound', {
-        page: req.url,
-    });
+  res.status(404).render('notFound', {
+    page: req.url,
+  });
 };
 
 // export the relevant public controller functions
 module.exports = {
-    index: hostIndex,
-    page1: hostPage1,
-    page2: hostPage2,
-    page3: hostPage3,
-    page4: hostPage4,
-    readCat,
-    readDog,
-    getName,
-    getNameDog,
-    setName,
-    setNameDog,
-    updateLast,
-    updateLastDog,
-    searchName,
-    searchNameDog,
-    notFound,
+  index: hostIndex,
+  page1: hostPage1,
+  page2: hostPage2,
+  page3: hostPage3,
+  page4: hostPage4,
+  readCat,
+  readDog,
+  getName,
+  getNameDog,
+  setName,
+  setNameDog,
+  updateLast,
+  updateLastDog,
+  searchName,
+  searchNameDog,
+  notFound,
 };

@@ -5,35 +5,35 @@ mongoose.Promise = global.Promise;
 let DogModel = {};
 
 const DogSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        tirm: true,
-        unique: true,
-    },
+  name: {
+    type: String,
+    required: true,
+    tirm: true,
+    unique: true,
+  },
 
-    breed: {
-        type: String,
-        trim: true,
-    },
+  breed: {
+    type: String,
+    trim: true,
+  },
 
-    age: {
-        type: Number,
-        min: 0,
-    },
+  age: {
+    type: Number,
+    min: 0,
+  },
 
-    createdDate: {
-        type: Date,
-        default: Date.now,
-    },
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 DogSchema.statics.findByName = (name, callback) => {
-    const search = {
-        name,
-    };
+  const search = {
+    name,
+  };
 
-    return DogModel.findOne(search, callback);
+  return DogModel.findOne(search, callback);
 };
 
 DogModel = mongoose.model('Dog', DogSchema);
